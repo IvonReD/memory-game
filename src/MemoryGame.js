@@ -27,13 +27,32 @@ export class MemoryGame extends LitElement {
         type: String,
         reflect: true,
         attribute:'name-player'
-      }
+      },
+      myArray: {
+        type: Array
+      },
     };
   }
 
   constructor() {
     super();
     this.namePlayer = 'Player';
+    this.myArray = [
+      '🐼',
+    '🐱',
+    '🐭',
+    '🐰',
+    '🐳',
+    '🦀',
+    '🐉',
+    '🦋',
+    '🐸',
+    '🐠',
+    '🐻',
+    '🐷',
+    '🐧',
+    '🦓'
+  ];
   }
 
 
@@ -49,7 +68,12 @@ export class MemoryGame extends LitElement {
 
 
     <div id="container-card">
-      <card-memory></card-memory>
+      <div>
+      <ul>
+        ${this.myArray.map(i => html`<card-memory>${i} </card-memory>`)}
+      </ul>
+      </div>
+
       <!-- <card-memory></card-memory> -->
   </div>
 
