@@ -1,23 +1,31 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable arrow-body-style */
 import { html, css, LitElement } from 'lit-element';
 import './Card.js'
 
 export class MemoryGame extends LitElement {
+
+
   static get styles() {
-    return css`
-      :host {
-        display: flex;
-        background: #F2D2FE;
-        color: #0019A5;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-      #container-card{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        width: 100%;
-      }
+    return css `
+    :host {
+      display: flex;
+      background: #F2D2FE;
+      color: #0019A5;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .cards {
+      height: 100vh;
+      width: 100%;
+      padding: 40px 0px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+      align-content: center;
+      justify-items: center;
+    }
     `;
   }
 
@@ -28,17 +36,40 @@ export class MemoryGame extends LitElement {
         reflect: true,
         attribute:'name-player'
       },
-      myArray: {
+      arrayEmoji: {
         type: Array
       },
+
     };
   }
+
+  //metodo al dar click en card
+__clickCard(cardselect){
+  console.log(cardselect);
+}
+
+//Metodo ramdom y duplicidad de array
+__randomCard(){
+//se duplica array de emojis
+  const arrayOne = this.arrayEmoji;
+  const arregTwo = arrayOne;
+  // console.log(arrayOne);
+  // console.log(arregTwo);
+
+  //función nativa simple para la fusión de arrays
+  Array.prototype.push.apply(arrayOne, arregTwo);
+  // console.log(arrayOne);
+ //random del array
+  let cardRandomOne =  arrayOne;
+  cardRandomOne = cardRandomOne.sort(() => {return Math.random() - 0.5});
+  // console.log(cardRandomOne);
+}
 
   constructor() {
     super();
     this.namePlayer = 'Player';
-    this.myArray = [
-      '🐼',
+    this.arrayEmoji = [
+    '🐼',
     '🐱',
     '🐭',
     '🐰',
@@ -51,10 +82,11 @@ export class MemoryGame extends LitElement {
     '🐻',
     '🐷',
     '🐧',
-    '🦓'
+    '🦓',
+    '🐣'
   ];
+  this.__randomCard();
   }
-
 
 
   render() {
@@ -65,21 +97,18 @@ export class MemoryGame extends LitElement {
       <players-game>${this.namePlayer}</players-game>
     </div>
     </header>
-
-
     <div id="container-card">
-      <div>
-      <ul>
-        ${this.myArray.map(i => html`<card-memory>${i} </card-memory>`)}
-      </ul>
+    <div class="cards">
+    ${this.arrayEmoji.map(i => {
+      return html`
+      <card-memory @click="${() => { this.__clickCard(i) }}"
+      choice="${i}">
+    </card-memory>
+      `;
+    })}
       </div>
 
-      <!-- <card-memory></card-memory> -->
   </div>
-
-
-
-
     `;
   }
 }

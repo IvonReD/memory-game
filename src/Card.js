@@ -1,49 +1,21 @@
-import { LitElement, html, css } from 'lit-element';
+import {
+  LitElement,
+  html,
+  css
+} from 'lit-element';
 
 export class Card extends LitElement {
   static get styles() {
-    return css`
-      :host {
-        background: #551DA5;
-        border-radius: 20px;
+    return css `
+      #cards-hidden, #cards-open {
+        background: deepskyblue;
+        font-size: 3rem;
+        width: 58px;
+        margin: 15px;
+        border-radius: 10px;
         width: 70px;
         text-align: center;
         color: white;
-      }
-      :host(:hover){
-        box-shadow: 0 5px 30px #15F7CE;
-      }
-      #options{
-        display: none;
-      }
-      :host(:hover) #options {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      :host(:hover) #unknown-value{
-        display: none;
-      }
-      #unknown-value{
-        font-size: 4em;
-      }
-      ul{
-        display: flex;
-        flex-direction: column;
-        align-content: space-evenly;
-        padding: 0;
-        height: 100%;
-      }
-      ul li {
-        list-style: none;
-      }
-
-      ul li button{
-        height: 40px;
-      }
-
-      .hide {
-        display: none;
       }
     `;
   }
@@ -56,7 +28,7 @@ export class Card extends LitElement {
       choice: {
         type: String,
       },
-      valueClass:{
+      valueClass: {
         type: String
       }
     };
@@ -65,22 +37,19 @@ export class Card extends LitElement {
   constructor() {
     super();
     this.isPlayed = false;
-    this.choice= '☀';
+    this.choice = '☀';
+
   }
 
 
   render() {
-    return html`
-    <div id="unknown-value">
-      ?
+    return html `
+    <div>
+      <div id="cards-hidden">? </div>
+      <div id="cards-open">${this.choice}</div>
     </div>
-    <div id="options">
-      <ul>
-        <li>
-          <button>🦓</button>
-        </li>
-      </ul>
-    </div>
+
+
     <slot></slot>
     `;
   }
