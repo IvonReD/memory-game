@@ -15,6 +15,11 @@ export class MemoryGame extends LitElement {
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+
+    h2{
+      text-align: center;
     }
 
     .cards {
@@ -63,7 +68,10 @@ __randomCard(){
   let cardRandomOne =  arrayOne;
   cardRandomOne = cardRandomOne.sort(() => {return Math.random() - 0.5});
   // console.log(cardRandomOne);
+//  console.log(this.arrayEmoji);
 }
+
+
 
   constructor() {
     super();
@@ -93,9 +101,10 @@ __randomCard(){
     return html`
     <header>
     <h2> Memory Game</h2>
-    <div>
-      <players-game>${this.namePlayer}</players-game>
-    </div>
+
+      <players-game players="Nancy"></players-game>
+      <players-game players="Pili"></players-game>
+
     </header>
     <div id="container-card">
     <div class="cards">

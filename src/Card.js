@@ -22,15 +22,14 @@ export class Card extends LitElement {
 
   static get properties() {
     return {
-      isPlayed: {
-        type: Boolean,
-      },
+
       choice: {
         type: String,
       },
-      valueClass: {
-        type: String
-      }
+      open: {
+        type: Boolean,
+      },
+
     };
   }
 
@@ -38,8 +37,10 @@ export class Card extends LitElement {
     super();
     this.isPlayed = false;
     this.choice = '☀';
+    this.open = false;
 
   }
+
 
 
   render() {
@@ -48,7 +49,6 @@ export class Card extends LitElement {
       <div id="cards-hidden">? </div>
       <div id="cards-open">${this.choice}</div>
     </div>
-
 
     <slot></slot>
     `;
