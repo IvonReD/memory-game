@@ -50,24 +50,66 @@ export class MemoryGame extends LitElement {
       arrCompare: {
         type: Array,
       },
+      addCards:{
+        type: Array,
+      },
+      cardCorrect:{
+        type: Array
+      }
 
     };
   }
 
 
   _clickCard(e) {
+    this.openCard(e);
+    const cardValue = e.target.choice;
+    this.arrCompare.push(cardValue);
+    console.log(this.arrCompare, 'comparar')
+
+    const cardHtml = e.target;
+    this.addCards.unshift(cardHtml);
+    console.log(this.addCards, 'target')
+    this.compareCards();
+  }
+
+  openCard(e){
     e.target.dispatchEvent(new Event('open'));
-    if (this.arrCompare.length < 2) {
-      console.log(e.target.choice)
-      this.arrCompare.push(e.target.choice)
-      console.log(this.arrCompare)
-      if(this.arrCompare[0] === this.arrCompare[1]) {
-      console.log("es correcto")
+  }
+
+  correctCards(arrayCards){
+    arrayCards.forEach(card  => {
+      console.log(card)
+      // this.cardCorrect.push(card);
+    })
+  }
+
+  closeCards(e){
+    // impares.forEach(card => {
+      // setTimeout(() =>{
+      //   e.target.dispatchEvent(new Event('close'));
+      // }, 1000);
+    // })
+
+    return new Promise(res => {
+      setTimeout(() => {
+        e.target.dispatchEvent(new Event('close'));
+        res();
+      }, 1500);
+    });
+  }
+
+  compareCards(){
+    console.log(this.arrCompare);
+    if (this.arrCompare.length >= 2) {
+      if (this.arrCompare[0] === this.arrCompare[1]) {
+        this.correctCards(this.addCards);
       }else{
-        console.log("es incorrecto")
+        this.closeCards(this.addCards);
       }
+      this.arrCompare.splice(0);
+      this.addCards.splice(0);
     }
-    // console.log(this.arrCompare)
   }
 
   _randomCard() {
@@ -80,7 +122,14 @@ export class MemoryGame extends LitElement {
     });
   }
 
-  _updateInfo(){
+
+  constructor() {
+    super();
+    this.namePlayer = 'Player';
+    this.level = 0;
+    this.addCards= [];
+    this.cardCorrect= [];
+    this.arrCompare = [];
     this.arrayEmoji = [
       '🐼',
       '🐱',
@@ -99,24 +148,7 @@ export class MemoryGame extends LitElement {
       '🐣'
     ];
     this._randomCard();
-    this.arrCompare = [];
-
   }
-
-  constructor() {
-    super();
-    this.namePlayer = 'Player';
-    this._updateInfo();
-    this.level = 0;
-  }
-
-  updated(changedProperties) {
-    if (changedProperties.has('level')) {
-      this._updateInfo();
-    }
-  }
-
-
 
   render() {
     return html `
@@ -126,7 +158,6 @@ export class MemoryGame extends LitElement {
       <players-game players="Pili"></players-game>
     </header>
     <div id="container-card">
-
       <div class="cards">
          ${this.arrayEmoji.map(i => {
             return html`
