@@ -1,6 +1,10 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable arrow-body-style */
-import { html, css, LitElement } from 'lit-element';
+import {
+  html,
+  css,
+  LitElement
+} from 'lit-element';
 import './Card.js'
 
 export class MemoryGame extends LitElement {
@@ -38,7 +42,7 @@ export class MemoryGame extends LitElement {
       namePlayer: {
         type: String,
         reflect: true,
-        attribute:'name-player'
+        attribute: 'name-player'
       },
       arrayEmoji: {
         type: Array
@@ -55,59 +59,58 @@ export class MemoryGame extends LitElement {
   }
 
   //metodo al dar click en card
-_clickCard(e){
-  e.target.dispatchEvent(new Event('open'));
-  console.log(e.target)
-}
+  _clickCard(e) {
+    e.target.dispatchEvent(new Event('open'));
+    console.log(e.target)
+  }
 
-//Metodo ramdom y duplicidad de array
-_randomCard(){
-//se duplica array de emojis
-  const arrayOne = this.arrayEmoji;
-  const arregTwo = arrayOne;
-
-
-  //función nativa simple para la fusión de arrays
-  Array.prototype.push.apply(arrayOne, arregTwo);
- //random del array
-  let cardRandomOne =  arrayOne;
-  cardRandomOne = cardRandomOne.sort(() => {return Math.random() - 0.5});
-//  this.arrayAll =  cardRandomOne.map(x => ({
-//     value: x,
-//     isOpen: false,
-// }))
-}
+  //Metodo ramdom y duplicidad de array
+  _randomCard() {
+    //se duplica array de emojis
+    const arrayOne = this.arrayEmoji;
+    const arregTwo = arrayOne;
 
 
-
+    //función nativa simple para la fusión de arrays
+    Array.prototype.push.apply(arrayOne, arregTwo);
+    //random del array
+    let cardRandomOne = arrayOne;
+    cardRandomOne = cardRandomOne.sort(() => {
+      return Math.random() - 0.5
+    });
+    //  this.arrayAll =  cardRandomOne.map(x => ({
+    //     value: x,
+    //     isOpen: false,
+    // }))
+  }
 
   constructor() {
     super();
     this.namePlayer = 'Player';
     this.arrayEmoji = [
-    '🐼',
-    '🐱',
-    '🐭',
-    '🐰',
-    '🐳',
-    '🦀',
-    '🐉',
-    '🦋',
-    '🐸',
-    '🐠',
-    '🐻',
-    '🐷',
-    '🐧',
-    '🦓',
-    '🐣'
-  ];
-  this._randomCard();
+      '🐼',
+      '🐱',
+      '🐭',
+      '🐰',
+      '🐳',
+      '🦀',
+      '🐉',
+      '🦋',
+      '🐸',
+      '🐠',
+      '🐻',
+      '🐷',
+      '🐧',
+      '🦓',
+      '🐣'
+    ];
+    this._randomCard();
   }
 
 
 
   render() {
-    return html`
+    return html `
     <header>
     <h2> Memory Game</h2>
       <players-game players="Nancy"></players-game>
@@ -115,13 +118,12 @@ _randomCard(){
     </header>
     <div id="container-card">
 
-
       <div class="cards">
-    ${this.arrayEmoji.map(i => {
-      return html`
-      <card-memory @click="${this._clickCard}"
-      .choice="${i}">
-    </card-memory>
+         ${this.arrayEmoji.map(i => {
+            return html`
+             <card-memory @click="${this._clickCard}"
+              .choice="${i}">
+              </card-memory>
       `;
     })}
       </div>

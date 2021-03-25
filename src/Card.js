@@ -4,9 +4,6 @@ import {
   css
 } from 'lit-element';
 
-import { classMap } from 'lit-html/directives/class-map';
-
-
 export class Card extends LitElement {
   static get styles() {
     return css `
@@ -26,6 +23,7 @@ export class Card extends LitElement {
       }
       .open {
         display: block;
+        margin: -62px 0px;
       }
 
       .close{
@@ -41,11 +39,11 @@ export class Card extends LitElement {
         type: String,
       },
 
-      open:{
-        type:Boolean
+      open: {
+        type: Boolean
       },
-      played:{
-        type:Boolean
+      played: {
+        type: Boolean
       }
 
     };
@@ -59,21 +57,21 @@ export class Card extends LitElement {
 
   }
 
-  connectedCallback(){
+  connectedCallback() {
     super.connectedCallback();
-    this.open= false;
+    this.open = false;
     this.played = false;
   }
 
 
-  firstUpdated(){
-    this.addEventListener('open', () =>{
+  firstUpdated() {
+    this.addEventListener('open', () => {
       this.open = true;
     });
-    this.addEventListener('close', () =>{
-      this.open = false;
+    this.addEventListener('close', () => {
+      this.open = true;
     });
-    this.addEventListener('played', () =>{
+    this.addEventListener('played', () => {
       this.played = false;
     })
 
@@ -81,10 +79,10 @@ export class Card extends LitElement {
 
 
   render() {
-    return html`
+    return html `
     <div id="cards" class="${this.played ? 'played' : ''}">*
-    <span  class="${this.open ? 'open' : 'close'}"> ${this.choice}
-    </span>
+    <div  class="${this.open ? 'open' : 'close'}"> ${this.choice}
+    </div>
     </div>
     `;
   }
