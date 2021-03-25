@@ -4,10 +4,13 @@ import {
   css
 } from 'lit-element';
 
+import { classMap } from 'lit-html/directives/class-map';
+
+
 export class Card extends LitElement {
   static get styles() {
     return css `
-      #cards-hidden, #cards-open {
+    #cards {
         background: deepskyblue;
         font-size: 3rem;
         width: 58px;
@@ -16,41 +19,73 @@ export class Card extends LitElement {
         width: 70px;
         text-align: center;
         color: white;
+
       }
+     #cards:hover {
+        box-shadow: 0 5px 30px #ed08da;
+      }
+      .open {
+        display: block;
+      }
+
+      .close{
+        display: none;
+      }
+
     `;
   }
 
   static get properties() {
     return {
-
       choice: {
         type: String,
       },
-      open: {
-        type: Boolean,
+
+      open:{
+        type:Boolean
       },
+      played:{
+        type:Boolean
+      }
 
     };
   }
 
+
+
   constructor() {
     super();
-    this.isPlayed = false;
     this.choice = '☀';
-    this.open = false;
+
+  }
+
+  connectedCallback(){
+    super.connectedCallback();
+    this.open= false;
+    this.played = false;
+  }
+
+
+  firstUpdated(){
+    this.addEventListener('open', () =>{
+      this.open = true;
+    });
+    this.addEventListener('close', () =>{
+      this.open = false;
+    });
+    this.addEventListener('played', () =>{
+      this.played = false;
+    })
 
   }
 
 
-
   render() {
-    return html `
-    <div>
-      <div id="cards-hidden">? </div>
-      <div id="cards-open">${this.choice}</div>
+    return html`
+    <div id="cards" class="${this.played ? 'played' : ''}">*
+    <span  class="${this.open ? 'open' : 'close'}"> ${this.choice}
+    </span>
     </div>
-
-    <slot></slot>
     `;
   }
 }

@@ -23,9 +23,8 @@ export class MemoryGame extends LitElement {
     }
 
     .cards {
-      height: 100vh;
+      height: 68vh;
       width: 100%;
-      padding: 40px 0px;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
       align-content: center;
@@ -44,32 +43,41 @@ export class MemoryGame extends LitElement {
       arrayEmoji: {
         type: Array
       },
+      opened: {
+        type: Array,
+      },
+      arrayAll: {
+        type: Array,
+        value: [],
+      },
 
     };
   }
 
   //metodo al dar click en card
-__clickCard(cardselect){
-  console.log(cardselect);
+_clickCard(e){
+  e.target.dispatchEvent(new Event('open'));
+  console.log(e.target)
 }
 
 //Metodo ramdom y duplicidad de array
-__randomCard(){
+_randomCard(){
 //se duplica array de emojis
   const arrayOne = this.arrayEmoji;
   const arregTwo = arrayOne;
-  // console.log(arrayOne);
-  // console.log(arregTwo);
+
 
   //función nativa simple para la fusión de arrays
   Array.prototype.push.apply(arrayOne, arregTwo);
-  // console.log(arrayOne);
  //random del array
   let cardRandomOne =  arrayOne;
   cardRandomOne = cardRandomOne.sort(() => {return Math.random() - 0.5});
-  // console.log(cardRandomOne);
-//  console.log(this.arrayEmoji);
+//  this.arrayAll =  cardRandomOne.map(x => ({
+//     value: x,
+//     isOpen: false,
+// }))
 }
+
 
 
 
@@ -93,31 +101,31 @@ __randomCard(){
     '🦓',
     '🐣'
   ];
-  this.__randomCard();
+  this._randomCard();
   }
+
 
 
   render() {
     return html`
     <header>
     <h2> Memory Game</h2>
-
       <players-game players="Nancy"></players-game>
       <players-game players="Pili"></players-game>
-
     </header>
     <div id="container-card">
-    <div class="cards">
+
+
+      <div class="cards">
     ${this.arrayEmoji.map(i => {
       return html`
-      <card-memory @click="${() => { this.__clickCard(i) }}"
-      choice="${i}">
+      <card-memory @click="${this._clickCard}"
+      .choice="${i}">
     </card-memory>
       `;
     })}
       </div>
-
-  </div>
+      </div>
     `;
   }
 }

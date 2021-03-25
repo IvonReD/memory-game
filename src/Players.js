@@ -14,6 +14,7 @@ export class Players extends LitElement {
         padding: 5px;
         margin: 10px 90px;
       }
+
     `;
   }
 
