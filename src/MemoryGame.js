@@ -47,46 +47,40 @@ export class MemoryGame extends LitElement {
       arrayEmoji: {
         type: Array
       },
-      opened: {
+      arrCompare: {
         type: Array,
-      },
-      arrayAll: {
-        type: Array,
-        value: [],
       },
 
     };
   }
 
-  //metodo al dar click en card
+
   _clickCard(e) {
     e.target.dispatchEvent(new Event('open'));
-    console.log(e.target)
+    if (this.arrCompare.length < 2) {
+      console.log(e.target.choice)
+      this.arrCompare.push(e.target.choice)
+      console.log(this.arrCompare)
+      if(this.arrCompare[0] === this.arrCompare[1]) {
+      console.log("es correcto")
+      }else{
+        console.log("es incorrecto")
+      }
+    }
+    // console.log(this.arrCompare)
   }
 
-  //Metodo ramdom y duplicidad de array
   _randomCard() {
-    //se duplica array de emojis
     const arrayOne = this.arrayEmoji;
     const arregTwo = arrayOne;
-
-
-    //función nativa simple para la fusión de arrays
     Array.prototype.push.apply(arrayOne, arregTwo);
-    //random del array
     let cardRandomOne = arrayOne;
     cardRandomOne = cardRandomOne.sort(() => {
       return Math.random() - 0.5
     });
-    //  this.arrayAll =  cardRandomOne.map(x => ({
-    //     value: x,
-    //     isOpen: false,
-    // }))
   }
 
-  constructor() {
-    super();
-    this.namePlayer = 'Player';
+  _updateInfo(){
     this.arrayEmoji = [
       '🐼',
       '🐱',
@@ -105,6 +99,21 @@ export class MemoryGame extends LitElement {
       '🐣'
     ];
     this._randomCard();
+    this.arrCompare = [];
+
+  }
+
+  constructor() {
+    super();
+    this.namePlayer = 'Player';
+    this._updateInfo();
+    this.level = 0;
+  }
+
+  updated(changedProperties) {
+    if (changedProperties.has('level')) {
+      this._updateInfo();
+    }
   }
 
 
@@ -122,7 +131,7 @@ export class MemoryGame extends LitElement {
          ${this.arrayEmoji.map(i => {
             return html`
              <card-memory @click="${this._clickCard}"
-              .choice="${i}">
+              choice="${i}">
               </card-memory>
       `;
     })}
