@@ -103,9 +103,11 @@ export class MemoryGame extends LitElement {
     console.log(this.arrCompare);
     if (this.arrCompare.length >= 2) {
       if (this.arrCompare[0] === this.arrCompare[1]) {
+        console.log('Son pares');
         this.correctCards(this.addCards);
       }else{
         this.closeCards(this.addCards);
+        console.log('Son Impares');
       }
       this.arrCompare.splice(0);
       this.addCards.splice(0);
